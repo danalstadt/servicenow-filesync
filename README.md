@@ -1,92 +1,54 @@
-# FileSync
+# filesync
+
+Based on fruition-partners/filesync.
 
 ## Overview
 
-FileSync synchronizes local file changes to mapped records in ServiceNow instances.
+filesync synchronizes local file changes to mapped records in ServiceNow instances.
 
-This enables ServiceNow developers to use their favorite integrated development environments (IDEs) and text editors
-like WebStorm and Sublime for editing JavaScript, HTML, Jelly and other code - without wasting time and interrupting
-development workflow copying and pasting code into a browser.
+This enables ServiceNow developers to use their favorite integrated development environments (IDEs) and text editors like WebStorm and Sublime for editing JavaScript, HTML, Jelly and other code - without wasting time and interrupting development workflow copying and pasting code into a browser.
 
-When a file changes within a configured root (project) folder, the parent folder and file name are used to identify the
-table and record to be updated.
+When a file changes within a configured root (project) folder, the parent folder and file name are used to identify the table and record to be updated.
 
-Adding an empty file, or clearing and saving an existing file, refreshes the local file with the latest instance
-version, syncing *from* the instance *to* the local file. This is an easy way to populate your project folder with
-existing scripts related to your project.
+Adding an empty file, or clearing and saving an existing file, refreshes the local file with the latest instance version, syncing *from* the instance *to* the local file. This is an easy way to populate your project folder with existing scripts related to your project.
+
+## Dependencies
+
+filesync requires [node.js](http://nodejs.org/) and [npm](https://www.npmjs.org/) to be installed on your local system.
 
 ## Installation
 
-**Step 1.** Ensure the [JSON Web Service plugin](http://wiki.servicenow.com/index.php?title=JSON_Web_Service) is
-activated for your instance.
+1. Clone this repository to a suitable location on your filesystem: `git clone git@github.com:danalstadt/servicenow-filesync.git`
 
-**Step 2.** Unzip **filesync.zip** into your desired install path, for example:
+2. From the servicenow-filesync directory (that you just created), run `npm install` to install project dependencies.
 
-* On Windows: `c:\dev\tools\filesync`
-* On Mac: `/Applications/filesync`
+3. Ensure the [JSON Web Service plugin](http://wiki.servicenow.com/index.php?title=JSON_Web_Service) is activated for your instance.
 
-**Step 3.** Create a local folder structure for your project / source files. Project folders will be mapped to root
-folders in the **app.config.json** config file. The following example folder structure is mapped in the
-**app.config.json settings** section below:
+4. Copy the included example configuration `app.config.default.json` to `app.config.json`.
 
+5. Create a local folder structure for your project / source files. Project folders will be mapped to root folders in the `app.config.json` config file.
 
-    c:\dev
-        \project_a
-            business_rules
-            script_includes
-        \project_b
-            script_includes
-            ui_pages
+6. Edit `app.config.json`.
 
-**Step 4.** Edit **app.config.json**.
-
-* Review the **app.config.json settings** section below for guidance. **Please read all comments.**
-* Configure at least one root (project) folder to host, user, pass mapping. user and pass will be encoded and replaced
-by an auth key at runtime.
-* **Note:** You must restart FileSync any time you update app.config.json.
+    * Review the `app.config.json settings` section below for guidance.
+    * Configure at least one root (project) folder to host, user, pass mapping. user and pass will be encoded and replaced by an auth key at runtime.
+    * Note: You must restart filesync any time you update app.config.json.
 
 ## Usage
 
-With installation and configuration completed, you can start **filesync** by executing the included batch/shell scripts:
+With installation and configuration completed, you can start filesync by executing the included executable: `./sync`. This watches for file changes.  As you make changes to mapped files, you'll see messages logged showing the sync processing.
 
-* On Windows, double-click: **filesync.bat**
-* On Mac, initially, right-click on **filesync.command** and choose Open. Subsequently, you can double-click to open.
+Verify everything works by adding an empty file corresponding to an instance record.
 
-This launches a console window where you should see log messages showing the starting configuration of FileSync.  Do not
-close this window.  This is what is watching for file changes.  As you make changes to mapped files, you'll see messages
-logged showing the sync processing.
+Adding the empty file will cause filesync to sync the content from ServiceNow to the file. Any changes to this local file will now be synced to the mapped instance.
 
-Verify everything works by adding an empty file corresponding to an instance record.  You can do this from your editor
-or IDE, or open a new command shell:
+The basic workflow is to initially create a script on ServiceNow (script include, business rule, ui script, etc.), then add an empty file of the same name (and mapped extension) to a mapped local folder.
 
-On Windows, at a command prompt:
-
-    cd c:\dev\project_a
-    md script_includes
-    cd script_includes
-    copy nul JSUtil.js      <-- creates an empty file named JSUtil.js
-
-On Mac, in Terminal:
-
-    cd /path/to/project_a
-    mkdir script_includes
-    cd script_includes
-    touch JSUtil.js
-
-Adding the empty JSUtil.js file will cause FileSync to sync the (OOB) JSUtil script include to the file. Any changes to
-this local file will now be synced to the mapped instance.
-
-The basic workflow is to initially create a script on ServiceNow (script include, business rule, ui script, etc.), then
-add an empty file of the same name (and mapped extension) to a mapped local folder.
-
-FileSync does not currently support creating new records in ServiceNow by simply adding local files since there are
-additional fields that may need to be populated beyond mapped script fields. So, always start by creating a new
-record on the instance, then add the empty local file and start editing your script.
+filesync does not currently support creating new records in ServiceNow by simply adding local files since there are additional fields that may need to be populated beyond mapped script fields. So, always start by creating a new record on the instance, then add the empty local file and start editing your script.
 
 ## app.config.json settings
 
-*Comments are included below for documentation purposes but are not valid in JSON files. You can validate JSON at
-<http://www.jslint.com/>*
+*Comments are included below for documentation purposes but are not valid in JSON files. You can validate JSON at <http://www.jslint.com/>*
 
     {
         // maps a root (project) folder to an instance
