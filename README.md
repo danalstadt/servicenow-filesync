@@ -134,17 +134,3 @@ record on the instance, then add the empty local file and start editing your scr
         },
         "debug": false                              // set to true to enable debug logging
     }
-
-## Architecture
-
-FileSync was built using [Node.js](http://nodejs.org/), a platform built on Chrome's JavaScript runtime. Zipped
-distribution contents:
-
-* README.md - this file, written in [Markdown](http://daringfireball.net/projects/markdown/) syntax
-* node.exe, node-darwin - Node.js runtime binaries
-* filesync.bat, filesync.command - Windows and Mac batch/shell scripts for starting FileSync
-* app.config.json - configuration file with mapping of folders to instances/tables
-* app.js - main application that watches for file changes
-* config.js - a module used to load and validate and app.config.json file
-* snc-client.js - a module that interacts with SN JSON Web Service to receive and send updates to instance
-* node_modules - folder containing 3rd-party node.js modules (from NPM) used to build app

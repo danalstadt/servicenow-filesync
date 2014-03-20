@@ -1,4 +1,3 @@
-// Copyright (c) 2013 Fruition Partners, Inc.
 'use strict';
 
 var chokidar = require('chokidar');

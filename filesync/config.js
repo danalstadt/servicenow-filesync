@@ -1,7 +1,6 @@
-// Copyright (c) 2013 Fruition Partners, Inc.
 'use strict';
 
-var CONFIG_FILE = './app.config.json';
+var CONFIG_FILE = '../app.config.json';
 
 var assert = require('assert-plus');
 require('colors');
